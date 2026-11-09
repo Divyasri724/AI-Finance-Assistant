@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Budget Management | AI Finance Assistant{% endblock %}
+
+{% block content %}
+
+<h1>Budget Management</h1>
+
+<div class="form-card">
+
+    <h2>Set Monthly Budget</h2>
+
+    <form method="POST">
+
+        <label>Category</label>
+
+        <select name="category" required>
+            <option value="">Select Category</option>
+
+            {% for category in categories %}
+            {% if category != "Salary" %}
+            <option value="{{ category }}">{{ category }}</option>
+            {% endif %}
+            {% endfor %}
+
+        </select>
+
+        <label>Monthly Budget (₹)</label>
+
+        <input
+            type="number"
+            name="limit_amount"
+            min="0.01"
+            step="0.01"
+            placeholder="Enter budget amount"
+            required
+        >
+
+        <label>Month</label>
+
+        <input
+            type="month"
+            name="month"
+            value="{{ current_month }}"
+            required
+        >
+
+        <button type="submit">Save Budget</button>
+
+    </form>
+
+</div>
+
+<div class="section">
+
+    <h2>Your Budgets</h2>
+
+    {% if budgets %}
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Month</th>
+                <th>Budget Limit</th>
+                <th>Amount Spent</th>
+                <th>Remaining</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for item in budgets %}
+
+            <tr>
+                <td>{{ item.category }}</td>
+                <td>{{ item.month }}</td>
+                <td>₹{{ "%.2f"|format(item.limit_amount) }}</td>
+                <td>₹{{ "%.2f"|format(item.spent) }}</td>
+                <td>₹{{ "%.2f"|format(item.remaining) }}</td>
+
+                <td>
+                    <form
+                        method="POST"
+                        action="{{ url_for('delete_budget', budget_id=item.id) }}"
+                        onsubmit="return confirm('Delete this budget?');">
+
+                        <button type="submit" class="danger">
+                            Delete
+                        </button>
+
+                    </form>
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+        <p>No budgets created yet.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

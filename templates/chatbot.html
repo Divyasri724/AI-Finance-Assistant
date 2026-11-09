@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}AI Finance Assistant{% endblock %}
+
+{% block content %}
+
+<div class="chat-container">
+
+    <h1>AI Finance Assistant</h1>
+
+    <p>Ask questions about your income, expenses, balance and budgets.</p>
+
+    <div id="chatMessages" class="chat-messages">
+        <div class="bot-message">
+            Hello! How can I help you understand your finances?
+        </div>
+    </div>
+
+    <form id="chatForm">
+
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Ask about your finances..."
+            required
+        >
+
+        <button type="submit">Send</button>
+
+    </form>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | AI Finance Assistant{% endblock %}
+
+{% block content %}
+
+<h1>Welcome, {{ user.name }}!</h1>
+<p>Here's your financial overview.</p>
+
+<div class="cards">
+
+    <div class="card income">
+        <h3>Total Income</h3>
+        <h2>₹{{ "%.2f"|format(income) }}</h2>
+    </div>
+
+    <div class="card expense">
+        <h3>Total Expenses</h3>
+        <h2>₹{{ "%.2f"|format(expenses) }}</h2>
+    </div>
+
+    <div class="card balance">
+        <h3>Available Balance</h3>
+        <h2>₹{{ "%.2f"|format(balance) }}</h2>
+    </div>
+
+</div>
+
+<div class="section">
+
+    <h2>Expense Breakdown</h2>
+
+    {% if chart_labels %}
+        <canvas
+            id="expenseChart"
+            data-labels='{{ chart_labels | tojson }}'
+            data-values='{{ chart_values | tojson }}'>
+        </canvas>
+    {% else %}
+        <p>No expense records available yet.</p>
+    {% endif %}
+
+</div>
+
+<div class="section">
+
+    <h2>Recent Transactions</h2>
+
+    {% if transactions %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in transactions %}
+            <tr>
+                <td>{{ item.description }}</td>
+                <td>₹{{ "%.2f"|format(item.amount) }}</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+        <p>No transactions recorded yet.</p>
+    {% endif %}
+
+    <a href="{{ url_for('transactions') }}" class="button-link">
+        View All Transactions
+    </a>
+
+</div>
+
+<script>
+const chartElement = document.getElementById("expenseChart");
+
+if (chartElement) {
+    const labels = JSON.parse(chartElement.dataset.labels);
+    const values = JSON.parse(chartElement.dataset.values);
+
+    new Chart(chartElement, {
+        type: "doughnut",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+}
+</script>
+
+{% endblock %}

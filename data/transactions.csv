@@ -1,0 +1,30 @@
+description,category
+Restaurant dinner,Food
+Lunch at hotel,Food
+Grocery shopping,Food
+Pizza order,Food
+Bus ticket,Travel
+Train ticket,Travel
+Petrol filling,Travel
+Flight booking,Travel
+Bought new clothes,Shopping
+Amazon purchase,Shopping
+Shopping mall,Shopping
+Electricity bill,Bills
+Mobile recharge,Bills
+Internet bill,Bills
+Water bill,Bills
+College fees,Education
+Bought textbooks,Education
+Online course,Education
+Hospital visit,Health
+Medicine purchase,Health
+Doctor consultation,Health
+Movie ticket,Entertainment
+Netflix subscription,Entertainment
+Video game,Entertainment
+Monthly salary,Salary
+Salary credited,Salary
+Freelance payment,Salary
+Other payment,Other
+Miscellaneous expense,Other

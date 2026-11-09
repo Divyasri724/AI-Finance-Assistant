@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Financial Insights{% endblock %}
+
+{% block content %}
+
+<h1>AI Financial Insights</h1>
+
+<div class="section">
+    <p>Here are some insights based on your financial activity.</p>
+
+    {% for insight in insights %}
+        <div class="insight">
+            {{ insight }}
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
